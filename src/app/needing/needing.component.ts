@@ -11,7 +11,8 @@ import * as firebase from 'firebase';
   templateUrl: './needing.component.html',
   styleUrls: ['./needing.component.scss']
 })
-export class NeedingComponent implements AfterViewInit  {
+export class NeedingComponent implements AfterViewInit , OnInit {
+  fireadmin = firebase.database().ref('/admin');
   firedata = firebase.database().ref('/waiting');
   firedneed = firebase.database().ref('/device');
   Data: any;
@@ -38,6 +39,16 @@ export class NeedingComponent implements AfterViewInit  {
     this.newsList.subscribe( data => {
       console.log(data);
       this.Data = data;
+    });
+  }
+  ngOnInit(): void {
+    this.fireadmin.child(firebase.auth().currentUser.uid).once('value', (snap) => {
+      console.log(snap.val().isadmin);
+      if (snap.val().isadmin === 1) {
+        console.log(true);
+      } else {
+        console.log(false);
+      }
     });
   }
   del(item) {

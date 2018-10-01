@@ -6,6 +6,23 @@ import { AppComponent } from './app.component';
 import { AllNewsComponent } from './all-news/all-news.component';
 import { RouterModule, Routes } from '@angular/router';
 // tslint:disable-next-line:import-spacing
+import {
+  MatButtonModule,
+  MatIconModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatCheckboxModule,
+  MatSidenavModule,
+  MatToolbarModule,
+  MatCardModule,
+  MatGridListModule
+} from '@angular/material';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+
 import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from 'angularfire2';
 import { firebaseConfig } from './app.firebase';
@@ -14,36 +31,48 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { APP_BASE_HREF } from '@angular/common';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { MaterialModule } from './material.module';
 import { NeedingComponent } from './needing/needing.component';
 import { HumancaseComponent } from './humancase/humancase.component';
 import { EdithumancaseComponent } from './edithumancase/edithumancase.component';
 import { EditneedingComponent } from './editneeding/editneeding.component';
+import { AuthService } from './auth.service';
+import { LoginComponent } from './login/login.component';
+import { IsloggedinComponent } from './isloggedin/isloggedin.component';
+import { AuthGuard } from './auth.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'needing',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
     path: 'needing',
-    component: NeedingComponent
+    component: NeedingComponent,
+    canActivate: [ AuthGuard ]
   },
   {
     path: 'feedback',
-    component: FeedbackComponent
+    component: FeedbackComponent,
+    canActivate: [ AuthGuard ]
   },
   {
     path: 'humancase',
-    component: HumancaseComponent
+    component: HumancaseComponent,
+    canActivate: [ AuthGuard ]
   },
   {
     path: 'edithumancase',
-    component: EdithumancaseComponent
+    component: EdithumancaseComponent,
+    canActivate: [ AuthGuard ]
   },
   {
     path: 'editneeding',
-    component: EditneedingComponent
+    component: EditneedingComponent,
+    canActivate: [ AuthGuard ]
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   }
 
 ];
@@ -56,21 +85,33 @@ const routes: Routes = [
     FeedbackComponent,
     HumancaseComponent,
     EdithumancaseComponent,
-    EditneedingComponent
-
+    EditneedingComponent,
+    LoginComponent,
+    IsloggedinComponent,
   ],
   imports: [
+    AngularFireModule.initializeApp(firebaseConfig),
     BrowserModule,
     RouterModule.forRoot(routes),
     FormsModule,
-    MaterialModule,
-    AngularFireModule.initializeApp(firebaseConfig),
-    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
-    AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
+    BrowserAnimationsModule,
+    AngularFireAuthModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatCardModule,
+    FlexLayoutModule,
+    MatGridListModule
   ],
-  providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
+  providers: [ AuthService , AuthGuard],
   // tslint:disable-next-line:no-trailing-whitespace
   bootstrap: [AppComponent]
 
