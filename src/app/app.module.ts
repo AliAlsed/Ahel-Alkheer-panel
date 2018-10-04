@@ -1,3 +1,4 @@
+import { environment } from './../environments/environment';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -39,6 +40,7 @@ import { AuthService } from './auth.service';
 import { LoginComponent } from './login/login.component';
 import { IsloggedinComponent } from './isloggedin/isloggedin.component';
 import { AuthGuard } from './auth.guard';
+import * as firebase from 'firebase';
 const routes: Routes = [
   {
     path: '',
@@ -90,7 +92,7 @@ const routes: Routes = [
     IsloggedinComponent,
   ],
   imports: [
-    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireModule.initializeApp(environment.firebase),
     BrowserModule,
     RouterModule.forRoot(routes),
     FormsModule,

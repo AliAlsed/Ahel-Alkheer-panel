@@ -1,6 +1,6 @@
 <mat-card style="margin:50px">
   <mat-card-content> 
-<form style="text-align: center" #f="ngForm" (ngSubmit)="login(f)">
+<form style="text-align: center" #f="ngForm">
   <div class="example-container">
       <mat-form-field>
         <input matInput type="email" name="email" ngModel placeholder="Email"
@@ -11,7 +11,7 @@
           <input matInput name="password" type="password" ngModel placeholder="Password"  required>
         </mat-form-field>
     </div>
-    <button  [disabled]="!f.valid" mat-button color="primary" style="align-self: flex-end"> login </button>
+    <button  type="submit" [disabled]="!f.valid" mat-button color="primary" style="align-self: flex-end" (click)="login(f)"> login </button>
 
 
 </form>
